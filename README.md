@@ -7,9 +7,9 @@ Configuracoes necessarias para funcionamento:
 	
 -HTTPS:
 	Configuracao necessaria no Tomcat:
-	<Connector SSLEnabled="true" acceptCount="100" clientAuth="false" disableUploadTimeout="true" enableLookups="false"
+	Connector SSLEnabled="true" acceptCount="100" clientAuth="false" disableUploadTimeout="true" enableLookups="false"
 	keystoreFile="c:\certif\ia.p12" keystorePass="1234567" keystoreType="PKCS12" maxSpareThreads="75" maxThreads="150"
-	minSpareThreads="25" port="8443" protocol="HTTP/1.1" scheme="https" secure="true" sslProtocol="TLS"/>
+	minSpareThreads="25" port="8443" protocol="HTTP/1.1" scheme="https" secure="true" sslProtocol="TLS"/
 	
 -Banco
 	Alterar os parametros em hibernate.cfg.xml para os desejados.
