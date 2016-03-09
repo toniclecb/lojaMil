@@ -19,8 +19,6 @@ import br.com.caelum.vraptor.view.Results;
 import br.com.lojaMil.dao.DepartamentoDao;
 import br.com.lojaMil.dao.PedidoDao;
 import br.com.lojaMil.dao.PedidoItemDao;
-import br.com.lojaMil.dao.ProdutoDao;
-import br.com.lojaMil.dao.UsuarioDao;
 import br.com.lojaMil.entities.Departamento;
 import br.com.lojaMil.entities.Pedido;
 import br.com.lojaMil.entities.PedidoItem;
@@ -68,6 +66,8 @@ public class PedidoController {
 		// a pagina
 		if (usuarioLogado.isLogged()) {
 			result.include("username", usuarioLogado.getUser().getNome());
+			
+			PedidoController.getPedidoNaoFinalizado(pedidoDao, usuarioLogado);
 			int n = usuarioLogado.getPedidoItensSize();
 			result.include("carrinhoquant", n);
 
@@ -95,9 +95,9 @@ public class PedidoController {
 				p.calculaValorTotal();
 				p.setUsuario(usuarioLogado.getUser());
 				for (PedidoItem pi : p.getPedidoItems()) {
-					pedidoItemDao.add(pi);
+					pedidoItemDao.atualiza(pi);//add(pi);
 				}
-				pedidoDao.add(p);
+				pedidoDao.atualiza(p);//add(p);
 				tx.commit();
 				// enviar email
 				enviaEmail(usuarioLogado, p, sizeListaPedidos);
@@ -157,6 +157,15 @@ public class PedidoController {
 			Logger.getLogger(ProdutoController.class).error("Não foi possivel enviar email para o pedido: " + p.getIdPedido(),
 					e);
 			e.printStackTrace();
+		}
+	}
+	
+	public static void getPedidoNaoFinalizado(PedidoDao pedidoDao, UsuarioLogado usuarioLogado) {
+		try {
+			Pedido pedido = pedidoDao.findByUsuarioNaoFinalizado(usuarioLogado.getUser());
+			usuarioLogado.setPedido(pedido);
+		} catch (Exception e) {
+			usuarioLogado.setPedido(null);
 		}
 	}
 }

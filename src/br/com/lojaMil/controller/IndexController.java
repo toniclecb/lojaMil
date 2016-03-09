@@ -2,6 +2,8 @@ package br.com.lojaMil.controller;
 
 import java.util.List;
 
+import com.mysql.fabric.xmlrpc.base.Array;
+
 import br.com.caelum.vraptor.Consumes;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
@@ -11,9 +13,11 @@ import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.validator.I18nMessage;
 import br.com.caelum.vraptor.view.Results;
 import br.com.lojaMil.dao.DepartamentoDao;
+import br.com.lojaMil.dao.PedidoDao;
 import br.com.lojaMil.dao.ProdutoDao;
 import br.com.lojaMil.dao.UsuarioDao;
 import br.com.lojaMil.entities.Departamento;
+import br.com.lojaMil.entities.Pedido;
 import br.com.lojaMil.entities.Produto;
 import br.com.lojaMil.entities.Usuario;
 import br.com.lojaMil.entities.UsuarioLogado;
@@ -30,19 +34,21 @@ public class IndexController {
 
 	private final Result result;
 	private UsuarioDao usuarioDao;
+	private PedidoDao pedidoDao;
 	private DepartamentoDao departamentoDao;
 	private ProdutoDao produtoDao;
 	private final UsuarioLogado usuarioLogado;
 	private Validator validator;
 
 	public IndexController(Result result, UsuarioDao usuarioDao, UsuarioLogado usuarioLogado,
-			Validator validator, DepartamentoDao departamentoDao, ProdutoDao produtoDao) {
+			Validator validator, DepartamentoDao departamentoDao, ProdutoDao produtoDao, PedidoDao pedidoDao) {
 		this.result = result;
 		this.validator = validator;
 		this.usuarioDao = usuarioDao;
 		this.usuarioLogado = usuarioLogado;
 		this.departamentoDao = departamentoDao;
 		this.produtoDao = produtoDao;
+		this.pedidoDao  = pedidoDao;
 	}
 
 	@Path({ "/", "/index" })
@@ -96,7 +102,14 @@ public class IndexController {
 			if (usuario.getPassword().equals(lista.get(0).getPassword())) {
 				// se o usuario eh valido entao adiciona ele na session
 				usuarioLogado.login(lista.get(0));
-				result.use(Results.json()).from(usuarioLogado.getUser().getNome(), "nomeusuario").serialize();
+				PedidoController.getPedidoNaoFinalizado(pedidoDao, usuarioLogado);
+
+				int n = usuarioLogado.getPedidoItensSize();
+				String [] nomen = new String[2];
+				nomen[0] = usuarioLogado.getUser().getNome();
+				nomen[1] = ""+n;
+				result.use(Results.json()).from(nomen, "nomeusuario_carrinho").serialize();
+
 				result.use(Results.status()).ok();
 			} else {
 				validator.add(new I18nMessage("error", "erro.login", new Object()));

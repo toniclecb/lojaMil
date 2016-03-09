@@ -11,10 +11,10 @@
 		</li>
 		
 		<li id="cadmenu" class="${ empty username ? 'visivel' : 'invisivel'}">
-			<a href="<c:url value="/cadastro"/>"><fmt:message key="cadastrese" /></a>
+			<a href="javascript:window.location = 'cadastro'"><fmt:message key="cadastrese" /></a>
 		</li>
 		<li id="pedmenu" class="${ empty username ? 'invisivel' : 'visivel'}">
-			<a href="<c:url value="pedidos"/>"><fmt:message key="meuspedidos" /></a>
+			<a href="javascript:window.location = 'pedidos'"><fmt:message key="meuspedidos" /></a>
 		</li>
 		
 		<ul class="w3-right">

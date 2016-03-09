@@ -45,6 +45,10 @@
        		<ul class="w3-ul w3-card-4" >
 			<c:forEach items="${pedido.pedidoItems}" var="pedItem">
 			  <li>
+			    <span class="w3-right w3-margin-right">
+			    	<%-- <a  href="javascript:angular.noop();" onclick='removeProduto()'> <fmt:message key="remover" /> </a> --%>
+			    	<a  href="removeProduto?pedidoItem=${pedItem.idPedidoItem}"> <fmt:message key="remover" /> </a>
+			    </span>
 			    <span>${pedItem.produto.titulo}</span>
 			  	<span class="w3-right w3-margin-right"> ${pedItem.quantidade} </span>
 			  	<span class="w3-right w3-margin-right"> <fmt:message key="quantidade" /> </span>

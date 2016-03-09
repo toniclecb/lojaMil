@@ -53,6 +53,10 @@ public class UsuarioLogado {
 		pedidoItem.setValor(prod.getPrecoVenda().
 				multiply(BigDecimal.valueOf(pedidoItem.getQuantidade())));
 		pedido.getPedidoItems().add(pedidoItem);
+		// Se o pedido nao tem itens entao define a data do pedido para a data da primeira compra
+		if (pedido.getPedidoItems().size() == 1){
+			pedido.setData(new Date());
+		}
 	}
 
 	public int getPedidoItensSize() {

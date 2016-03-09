@@ -133,7 +133,8 @@ app.controller('control', function($scope, $http, $window, $location) {
 			document.getElementById('cadmenu').className = 'invisivel';
 			document.getElementById('pedmenu').className = 'visivel';
     		document.getElementById('logout').className = 'visivel';
-    		document.getElementById('username').innerHTML=response.data.nomeusuario;
+    		document.getElementById('username').innerHTML=response.data.nomeusuario_carrinho[0];
+    		document.getElementById('carrinhosize').innerHTML=response.data.nomeusuario_carrinho[1];
     		// Se o usuario estiver na pagina de cadastro redireciona para o index
     		if ($location.absUrl().contains('cadastro'))
     			$window.location.href = "index";
@@ -161,4 +162,6 @@ app.controller('control', function($scope, $http, $window, $location) {
     				$window.location.href = "index";
         		});
         };
+        
+//    $scope.removeProduto = 
 });

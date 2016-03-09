@@ -23,7 +23,11 @@
 <body class="w3-content" style="max-width:1000px">
 <div ng-app="myApp" ng-controller="control" >
 
-
+<script type="text/javascript">
+var dataLocale = function(data, id){
+	document.getElementById('p_'+id).innerHTML = new Date(data).toLocaleDateString();
+};
+</script>
 
 <!-- linha superior de login -->
 <%@ include file="../index/menusuperior.jsp"%>
@@ -47,11 +51,18 @@
        		<h2><fmt:message key="pedidostotal" /> ${pedidoquant} </h2>
 			<c:forEach items="${pedidos}" var="ped">
 			  <li>
-			    <span>${ped.data}</span>
+			    <%-- <span>${ped.data}</span> --%>
+			    <span id='p_${ped.idPedido}'>
+			    <!-- Transforma a data do servidor para a data do locale do usuario -->
+			    <script type="text/javascript">
+			    	var d = '${ped.data}';
+			    	var i = '${ped.idPedido}';
+			    	dataLocale(d,i);
+			    </script>
+			    </span>
 			  	<span class="w3-right w3-margin-right"> ${ped.valorTotal} </span>
 			  	<span class="w3-right w3-margin-right"> <fmt:message key="valor.total" /> </span>
-			  	<span class="w3-right mil-margin-right"> ${fn:length(ped.pedidoItems)} </span>
-			  	<span class="w3-right w3-margin-right"> <fmt:message key="itens" /> </span>
+			  	<span class="w3-right mil-margin-right"> <fmt:message key="itens" /> ${fn:length(ped.pedidoItems)} </span>
 			  </li>
 			</c:forEach>
 			</ul>

@@ -39,5 +39,13 @@ public class PedidoDao extends GenericDao<Pedido> {
 		
 		return crit.list();
 	}
+
+	public Pedido findByUsuarioNaoFinalizado(Usuario user) {
+		Criteria crit = getSession().createCriteria(getAccessedClass());
+		crit.add(Restrictions.eq("usuario", user));
+		crit.add(Restrictions.eq("finalizado", 0));
+		
+		return (Pedido) crit.uniqueResult();
+	}
 	
 }
