@@ -1,0 +1,111 @@
+/* 
+CSS especifico da aplicacao LojaMil
+contem tambem modificacoes ao w3.css
+ */
+.w3-btn,.w3-btn-block {
+	padding: 2px 16px !important;
+}
+
+.w3-sidenav a {
+	padding: 4px 2px 4px 6px !important;
+}
+
+.w3-container {
+	padding: 0.01em 0px !important;
+}
+
+.liinput {
+	display: block;
+	padding: 5px 0px
+}
+
+.liinput input {
+	width: 140px;
+}
+
+.buscainput input {
+	width: 380px;
+}
+
+.visivel {
+	display: unset !important;
+}
+
+.invisivel {
+	display: none !important;
+}
+
+.navfont {
+	font-size: 12px;
+	line-height: 1.3;
+}
+
+.prodfont {
+	font-size: 12px;
+	line-height: 1.3;
+}
+
+.cadfont {
+	font-size: 14px;
+	line-height: 1.9;
+}
+
+.marginbot {
+	margin-bottom: 4px;
+}
+
+.precofont {
+	font-size: 18px;
+}
+
+img {
+	margin-bottom: 0px !important;
+}
+
+.textcar {
+	text-align: center !important;
+	font-size: 14px !important;
+	padding: 15px !important;
+}
+
+.navbar {
+	list-style-type: none;
+	/* margin: 0; */
+	overflow: hidden;
+	padding: 1px 0px 0px 0px;
+	width: 980px;
+	margin: 0 auto;
+}
+
+.navbar li {
+	float: left
+}
+
+.content500 {
+	min-height: 500px;
+}
+
+.cardnoprod {
+	width: 95%;
+	text-align: center;
+	font-size: 15px;
+	padding: 30px;
+}
+
+.showprod button {
+	font-size: 20px;
+}
+
+.showprod img {
+	width: 100%;
+}
+
+.proddesc {
+	width: 50%;
+	min-height: 409px;
+	padding-left: 10px;
+}
+
+.mil-margin-right {
+	margin-right: 64px;
+}
