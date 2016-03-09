@@ -68,27 +68,39 @@ public class IndexController {
 	
 	
 	
+//	/**
+//	 * Executa buscas requisitadas atraves do menu de categorias
+//	 * 
+//	 * @param departamento
+//	 * @param categoria
+//	 * @param subCategoria
+//	 */
+//	@Post("/buscarInicial")
+//	public void buscarInicial(String departamento, String categoria, String subCategoria, String ordena) {
+//		List<Produto> produtos = produtoDao.find(departamento, categoria, subCategoria, ordena);
+//		result.use(Results.json()).from(produtos, "produtos").serialize();
+//	}
+//
+//	@Post("/buscar")
+////	@Consumes("application/json")
+//	public void buscar(String busca, String ordena) {
+//		List<Produto> produtos = produtoDao.findTitulo(busca, ordena);
+//		result.use(Results.json()).from(produtos, "produtos").serialize();
+//	}
+
 	/**
-	 * Executa buscas requisitadas atraves do menu de categorias
-	 * 
+	 * Executa a busca dos dados de produto
+	 * @param titulo busca no titulo do produto
 	 * @param departamento
 	 * @param categoria
 	 * @param subCategoria
+	 * @param ordena deve ser 1, 2, ou 3
 	 */
-	@Post("/buscarInicial")
-	public void buscarInicial(String departamento, String categoria, String subCategoria, String ordena) {
-		List<Produto> produtos = produtoDao.find(departamento, categoria, subCategoria, ordena);
+	@Post("/busca")
+	public void busca(String titulo, String departamento, String categoria, String subCategoria, String ordena) {
+		List<Produto> produtos = produtoDao.find(titulo, departamento, categoria, subCategoria, ordena);
 		result.use(Results.json()).from(produtos, "produtos").serialize();
 	}
-
-	@Post("/buscar")
-//	@Consumes("application/json")
-	public void buscar(String busca, String ordena) {
-		List<Produto> produtos = produtoDao.findTitulo(busca, ordena);
-		result.use(Results.json()).from(produtos, "produtos").serialize();
-	}
-
-	
 	
 	
 	@Post("/login")

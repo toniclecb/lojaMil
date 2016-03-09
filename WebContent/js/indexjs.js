@@ -99,37 +99,36 @@ app.controller('control', function($scope, $http, $window, $location) {
 	$scope.tipo = "";
 	$scope.dep = "";
 	$scope.selectedOrdem = "3";
+	$scope.busca = "";
+	$scope.buscaTexto = false;
 	
 	$scope.tipoDepart = function(tipo_, idDep){
 		$scope.tipo = tipo_;
 		$scope.dep = idDep;
-		$scope.buscarInicial();
-	};
-	
-	$scope.busca = "";
-	$scope.buscar = function() {
-//		var buscajson = angular.toJson({busca : $scope.busca});
-		var url = "buscar?busca=" + $scope.busca + "&ordena=" + $scope.selectedOrdem;
-//		$http.post('buscar', buscajson).then(function(response){
-		$http.post(url).then(function(response){
-			refleshProdutos(response.data.produtos);
-		});
+		$scope.buscarProds(false);
 	};
 
-	$scope.buscarInicial = function() {
-		var urll = "buscarInicial";
+	$scope.buscarProds = function(textual) {
+		$scope.buscaTexto = textual;
+		var urll = "busca";
 		var ee = "?";
-		if ($scope.tipo == 1){
-			urll = urll + "?departamento=" + $scope.dep;
+		if (textual){
+			urll = urll + "?titulo=" + $scope.busca;
 			ee = "&";
-		} else if ($scope.tipo == 2){
-			urll = urll + "?categoria=" + $scope.dep;
-			ee = "&";
-		} else if ($scope.tipo == 3){
-			urll = urll + "?subCategoria=" + $scope.dep;
-			ee = "&";
+		} else {
+			if ($scope.tipo == 1){
+				urll = urll + "?departamento=" + $scope.dep;
+				ee = "&";
+			} else if ($scope.tipo == 2){
+				urll = urll + "?categoria=" + $scope.dep;
+				ee = "&";
+			} else if ($scope.tipo == 3){
+				urll = urll + "?subCategoria=" + $scope.dep;
+				ee = "&";
+			}
 		}
 		urll = urll  + ee + "ordena=" + $scope.selectedOrdem;
+		
 		$http.post(urll).then(function(response){
 			refleshProdutos(response.data.produtos);
 		});

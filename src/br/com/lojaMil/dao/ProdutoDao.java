@@ -54,17 +54,7 @@ public class ProdutoDao extends GenericDao<Produto>{
 			dis.add(cc);
 		}
 		crit.add(dis);
-		if (ordena != null && !ordena.equals("")){
-			if (ordena.equals("1"))
-				crit.addOrder(Order.desc("precoVenda"));
-			else if (ordena.equals("2"))
-				crit.addOrder(Order.asc("precoVenda"));
-			else if (ordena.equals("3"))
-				crit.addOrder(Order.asc("titulo"));
-		} else {
-			// ordenacao default eh por titulo
-			crit.addOrder(Order.asc("titulo"));
-		}
+		ordena(ordena, crit);
 		return crit.list();
 	}
 	
@@ -78,14 +68,22 @@ public class ProdutoDao extends GenericDao<Produto>{
 	 * Se departamento for != null faz a busca usando departamento<br>
 	 * Senao se categoria for != null faz a busca usando categoria<br>
 	 * Senao faz a busca usando a subcategoria.
-	 * @param departamento
-	 * @param categoria
-	 * @param subCategoria
-	 * @param ordena 
 	 * @return
 	 */
-	public List<Produto> find(String departamento, String categoria, String subCategoria, String ordena) {
+	public List<Produto> find(String titulo, String departamento, String categoria, String subCategoria, String ordena) {
 		Criteria crit = getSession().createCriteria(getAccessedClass());
+		if (titulo == null)
+			titulo = new String("");
+		List<Criterion> clist = new ArrayList<Criterion>(0);
+		for (String s : titulo.split(" ")) {
+			Criterion c = Restrictions.ilike("titulo", s, MatchMode.ANYWHERE); // %titulo%
+			clist.add(c);
+		}
+		Disjunction dis = Restrictions.disjunction(); // OR
+		for (Criterion cc : clist) {
+			dis.add(cc);
+		}
+		crit.add(dis);
 		if (departamento != null && !departamento.equals("")){
 //			nao precisa buscar os departamentos
 //			Criteria critDep = getSession().createCriteria(Departamento.class);
@@ -122,6 +120,11 @@ public class ProdutoDao extends GenericDao<Produto>{
 			crit.add(Restrictions.eq("subCategoria.idSubCategoria", subCategoriaL ));
 		}
 		// ordenacao
+		ordena(ordena, crit);
+		return crit.list();
+	}
+
+	private void ordena(String ordena, Criteria crit) {
 		if (ordena != null && !ordena.equals("")){
 			if (ordena.equals("1"))
 				crit.addOrder(Order.desc("precoVenda"));
@@ -133,7 +136,6 @@ public class ProdutoDao extends GenericDao<Produto>{
 			// ordenacao default eh por titulo
 			crit.addOrder(Order.asc("titulo"));
 		}
-		return crit.list();
 	}
 
 	/**

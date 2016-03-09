@@ -39,7 +39,7 @@
 
 <div class="w3-container" >
 	<!-- os cards de produto serao adicionados dentro da div a seguir -->
-	<div id="corpoprod" class="w3-row w3-border prodfont content500" data-ng-init="buscarInicial()" >
+	<div id="corpoprod" class="w3-row w3-border prodfont content500" data-ng-init="buscarProds('false')" >
 		<!-- div que vai ser preenchida pelo javascript para exibir os produtos -->	
 	</div>
 </div>

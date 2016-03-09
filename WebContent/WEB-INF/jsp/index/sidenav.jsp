@@ -1,6 +1,7 @@
 
 
 <nav class="navfont w3-sidenav w3-white w3-card-2" style="width:140px; position: absolute !important;">
+  <a  href="javascript:angular.noop();" ng-click="tipoDepart(0,0)"> <b><fmt:message key='tudo'/></b> </a>
   <c:forEach var="dep" items="${departamentos}">
 	<a  href="javascript:angular.noop();" ng-click="tipoDepart(1,${dep.idDepartamento})"> ${dep.descricao}</a>
 	<c:forEach var="cat" items="${dep.categorias}">
@@ -30,3 +31,4 @@
     </div>
   </div>
 </div>
+

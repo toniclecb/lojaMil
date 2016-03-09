@@ -104,8 +104,10 @@ public class ProdutoController {
 				if (p.getIdPedido() == null || p.getIdPedido() == 0)
 					pedidoDao.add(p);
 				for (PedidoItem pi : p.getPedidoItems()) {
-					pi.setPedido(p);
-					pedidoItemDao.add(pi);
+					if (pi.getIdPedidoItem() == null){
+						pi.setPedido(p);
+						pedidoItemDao.add(pi);
+					}
 				}
 //				p = (Pedido) pedidoDao.add(p);
 				tx.commit();

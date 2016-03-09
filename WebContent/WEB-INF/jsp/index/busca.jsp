@@ -1,6 +1,6 @@
 <!-- linha de pesquisa de produtos -->
 <div class="w3-container w3-row w3-border buscainput" >
-  <form ng-submit="buscar()">
+  <form ng-submit="buscarProds('true')">
   <ul class="navbar">
     <li style="margin-right: 10px;"><span><fmt:message key='busque' /></span>
     </li>

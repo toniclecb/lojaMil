@@ -55,7 +55,7 @@ var dataLocale = function(data, id){
 			    <span id='p_${ped.idPedido}'>
 			    <!-- Transforma a data do servidor para a data do locale do usuario -->
 			    <script type="text/javascript">
-			    	var d = '${ped.data}';
+			    	var d = ${ped.data.time};
 			    	var i = '${ped.idPedido}';
 			    	dataLocale(d,i);
 			    </script>
