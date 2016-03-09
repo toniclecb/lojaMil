@@ -14,6 +14,13 @@ contem tambem modificacoes ao w3.css
 	padding: 0.01em 0px !important;
 }
 
+.w3-select {
+	padding: 3px 0 !important;
+	margin-left: 2px;
+	margin-right: 2px;
+	width: 120px;
+}
+
 .liinput {
 	display: block;
 	padding: 5px 0px
@@ -23,8 +30,12 @@ contem tambem modificacoes ao w3.css
 	width: 140px;
 }
 
+.buscainput {
+	margin-top: 20px; margin-bottom: 20px;
+}
+
 .buscainput input {
-	width: 380px;
+	width: 280px;
 }
 
 .visivel {
@@ -83,6 +94,10 @@ img {
 
 .content500 {
 	min-height: 500px;
+	padding-bottom: 20px;
+}
+.cardprod {
+	max-height: 304px;
 }
 
 .cardnoprod {
@@ -98,6 +113,11 @@ img {
 
 .showprod img {
 	width: 100%;
+}
+
+.imgprod {
+    min-height: 246px;
+    width: 100%;
 }
 
 .proddesc {

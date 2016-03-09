@@ -65,15 +65,9 @@ public class IndexController {
 		}
 	}
 
-	/**
-	 * remove o usuario da sessao
-	 */
-	@Post("/logout")
-	public void logout() {
-		usuarioLogado.logout();
-		result.use(Results.logic()).redirectTo(IndexController.class).index();
-	}
-
+	
+	
+	
 	/**
 	 * Executa buscas requisitadas atraves do menu de categorias
 	 * 
@@ -82,18 +76,21 @@ public class IndexController {
 	 * @param subCategoria
 	 */
 	@Post("/buscarInicial")
-	public void buscarInicial(String departamento, String categoria, String subCategoria) {
-		List<Produto> produtos = produtoDao.find(departamento, categoria, subCategoria);
+	public void buscarInicial(String departamento, String categoria, String subCategoria, String ordena) {
+		List<Produto> produtos = produtoDao.find(departamento, categoria, subCategoria, ordena);
 		result.use(Results.json()).from(produtos, "produtos").serialize();
 	}
 
 	@Post("/buscar")
-	@Consumes("application/json")
-	public void buscar(String busca) {
-		List<Produto> produtos = produtoDao.findTitulo(busca);
+//	@Consumes("application/json")
+	public void buscar(String busca, String ordena) {
+		List<Produto> produtos = produtoDao.findTitulo(busca, ordena);
 		result.use(Results.json()).from(produtos, "produtos").serialize();
 	}
 
+	
+	
+	
 	@Post("/login")
 	@Consumes("application/json")
 	public void login(Usuario usuario) {
@@ -119,5 +116,14 @@ public class IndexController {
 			validator.add(new I18nMessage("error", "erro.login", new Object()));
 			validator.onErrorSendBadRequest();
 		}
+	}
+	
+	/**
+	 * remove o usuario da sessao
+	 */
+	@Post("/logout")
+	public void logout() {
+		usuarioLogado.logout();
+		result.use(Results.logic()).redirectTo(IndexController.class).index();
 	}
 }

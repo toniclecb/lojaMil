@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
@@ -36,9 +37,12 @@ public class ProdutoDao extends GenericDao<Produto>{
 	 * Caso o parametro <code>titulo</code> tenha espacos a busca sera feita
 	 * como uma disjunction (OR).
 	 * @param titulo string de busca
+	 * @param ordena 1,2 ou 3
 	 * @return lista de produtos
 	 */
-	public List<Produto> findTitulo(String titulo){
+	public List<Produto> findTitulo(String titulo, String ordena){
+		if (titulo == null)
+			titulo = new String("");
 		Criteria crit = getSession().createCriteria(Produto.class);
 		List<Criterion> clist = new ArrayList<Criterion>(0);
 		for (String s : titulo.split(" ")) {
@@ -50,6 +54,17 @@ public class ProdutoDao extends GenericDao<Produto>{
 			dis.add(cc);
 		}
 		crit.add(dis);
+		if (ordena != null && !ordena.equals("")){
+			if (ordena.equals("1"))
+				crit.addOrder(Order.desc("precoVenda"));
+			else if (ordena.equals("2"))
+				crit.addOrder(Order.asc("precoVenda"));
+			else if (ordena.equals("3"))
+				crit.addOrder(Order.asc("titulo"));
+		} else {
+			// ordenacao default eh por titulo
+			crit.addOrder(Order.asc("titulo"));
+		}
 		return crit.list();
 	}
 	
@@ -66,9 +81,10 @@ public class ProdutoDao extends GenericDao<Produto>{
 	 * @param departamento
 	 * @param categoria
 	 * @param subCategoria
+	 * @param ordena 
 	 * @return
 	 */
-	public List<Produto> find(String departamento, String categoria, String subCategoria) {
+	public List<Produto> find(String departamento, String categoria, String subCategoria, String ordena) {
 		Criteria crit = getSession().createCriteria(getAccessedClass());
 		if (departamento != null && !departamento.equals("")){
 //			nao precisa buscar os departamentos
@@ -104,6 +120,18 @@ public class ProdutoDao extends GenericDao<Produto>{
 		if (subCategoria != null && !subCategoria.equals("")){
 			Long subCategoriaL = Long.valueOf(subCategoria);
 			crit.add(Restrictions.eq("subCategoria.idSubCategoria", subCategoriaL ));
+		}
+		// ordenacao
+		if (ordena != null && !ordena.equals("")){
+			if (ordena.equals("1"))
+				crit.addOrder(Order.desc("precoVenda"));
+			else if (ordena.equals("2"))
+				crit.addOrder(Order.asc("precoVenda"));
+			else if (ordena.equals("3"))
+				crit.addOrder(Order.asc("titulo"));
+		} else {
+			// ordenacao default eh por titulo
+			crit.addOrder(Order.asc("titulo"));
 		}
 		return crit.list();
 	}

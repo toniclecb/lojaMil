@@ -7,7 +7,7 @@
 <div class="w3-container">
 	<ul class="w3-navbar w3-card-8 w3-light-grey">
 		<li class="w3-light-blue">
-			<a href="<c:url value="/"/>"><fmt:message key="project.name" /></a>
+			<a href="javascript:window.location = 'index'"><fmt:message key="project.name" /></a>
 		</li>
 		
 		<li id="cadmenu" class="${ empty username ? 'visivel' : 'invisivel'}">

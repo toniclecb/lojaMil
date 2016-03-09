@@ -15,9 +15,9 @@ if (produtos == 'undefined' || produtos.length == 0 ){
 	else
 		var img = 'noimg.png';
 	/* inseri o codigo relativo a cada produto na lista de produtos */
-	var html = "<div class='w3-third w3-container' >" +
+	var html = "<div class='w3-third w3-container cardprod' >" +
 		"<div class='w3-card-12 w3-margin' style='width:84%'>" +
-  		  "<a href='produto?prod="+prod.idProduto+"'><img src='img/"+img+"' alt='"+prod.titulo+"' style='width:100%; height:100%;'></a>" +
+  		  "<a href='produto?prod="+prod.idProduto+"'><img src='img/"+img+"' alt='"+prod.titulo+"' class='imgprod'></a>" +
 			  "<div class='w3-row w3-center w3-light-blue'>" +
   		    "<a class='w3-twothird' href='produto?prod="+prod.idProduto+"' style='text-decoration: none;'>"+prod.titulo+"</a>" +
         	"<a class='w3-third w3-blue precofont'> "+moeda+" "+prod.precoVenda+"</a></div>" +
@@ -92,11 +92,13 @@ app.controller('prodcontrol', function($scope, $http, $window) {
 });
 
 
+
 // Controller GERAL
 app.controller('control', function($scope, $http, $window, $location) {
 	$scope.usuario = {};
 	$scope.tipo = "";
 	$scope.dep = "";
+	$scope.selectedOrdem = "3";
 	
 	$scope.tipoDepart = function(tipo_, idDep){
 		$scope.tipo = tipo_;
@@ -106,21 +108,28 @@ app.controller('control', function($scope, $http, $window, $location) {
 	
 	$scope.busca = "";
 	$scope.buscar = function() {
-		var buscajson = angular.toJson({busca : $scope.busca});
-		$http.post('buscar', buscajson).then(function(response){
+//		var buscajson = angular.toJson({busca : $scope.busca});
+		var url = "buscar?busca=" + $scope.busca + "&ordena=" + $scope.selectedOrdem;
+//		$http.post('buscar', buscajson).then(function(response){
+		$http.post(url).then(function(response){
 			refleshProdutos(response.data.produtos);
 		});
 	};
 
 	$scope.buscarInicial = function() {
 		var urll = "buscarInicial";
+		var ee = "?";
 		if ($scope.tipo == 1){
 			urll = urll + "?departamento=" + $scope.dep;
+			ee = "&";
 		} else if ($scope.tipo == 2){
 			urll = urll + "?categoria=" + $scope.dep;
+			ee = "&";
 		} else if ($scope.tipo == 3){
 			urll = urll + "?subCategoria=" + $scope.dep;
+			ee = "&";
 		}
+		urll = urll  + ee + "ordena=" + $scope.selectedOrdem;
 		$http.post(urll).then(function(response){
 			refleshProdutos(response.data.produtos);
 		});
