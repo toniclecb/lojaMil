@@ -26,6 +26,7 @@ if (produtos == 'undefined' || produtos.length == 0 ){
   }
   document.getElementById('corpoprod').innerHTML = allhtml;
 }
+document.getElementById('pages').className = 'w3-container w3-row visivel';
 }
 
 // ANGULAR
@@ -100,16 +101,39 @@ app.controller('control', function($scope, $http, $window, $location) {
 	$scope.dep = "";
 	$scope.selectedOrdem = "3";
 	$scope.busca = "";
-	$scope.buscaTexto = false;
-	
+	$scope.buscaUrl = "";
+	$scope.tt = 10;
+	$scope.shown = function(x){
+		if (x >= $scope.tt){
+			return false;
+		} else{
+			return true;
+		}
+	};
 	$scope.tipoDepart = function(tipo_, idDep){
 		$scope.tipo = tipo_;
 		$scope.dep = idDep;
 		$scope.buscarProds(false);
 	};
+	
+	$scope.buscaPage = function(page){
+		for (i = 0; i <= 9; i++) {
+			document.getElementById('page'+i).style.color = '#000';
+		}
+		document.getElementById('page'+page).style.color = '#00F';
+		if (page == 9){
+			document.getElementById('modal01').style.display='block';
+    		document.getElementById('modal01text').innerHTML = refine;
+			return;
+		}
+		var url_ = $scope.buscaUrl + "&page=" + page;
+		$http.post(url_).then(function(response){
+			refleshProdutos(response.data.produtos[0]);
+			$scope.tt = response.data.produtos[1];
+		});
+	};
 
 	$scope.buscarProds = function(textual) {
-		$scope.buscaTexto = textual;
 		var urll = "busca";
 		var ee = "?";
 		if (textual){
@@ -128,9 +152,10 @@ app.controller('control', function($scope, $http, $window, $location) {
 			}
 		}
 		urll = urll  + ee + "ordena=" + $scope.selectedOrdem;
-		
+		$scope.buscaUrl = urll;
 		$http.post(urll).then(function(response){
-			refleshProdutos(response.data.produtos);
+			refleshProdutos(response.data.produtos[0]);
+			$scope.tt = response.data.produtos[1];
 		});
 	};
 	

@@ -32,6 +32,7 @@ import br.com.lojaMil.entities.UsuarioLogado;
 @Resource
 public class IndexController {
 
+	public static final int PAGINATION_SIZE = 12;
 	private final Result result;
 	private UsuarioDao usuarioDao;
 	private PedidoDao pedidoDao;
@@ -97,9 +98,14 @@ public class IndexController {
 	 * @param ordena deve ser 1, 2, ou 3
 	 */
 	@Post("/busca")
-	public void busca(String titulo, String departamento, String categoria, String subCategoria, String ordena) {
-		List<Produto> produtos = produtoDao.find(titulo, departamento, categoria, subCategoria, ordena);
-		result.use(Results.json()).from(produtos, "produtos").serialize();
+	public void busca(String titulo, String departamento, String categoria, String subCategoria, String ordena, String page) {
+		List<Produto> produtos = produtoDao.find(titulo, departamento, categoria, subCategoria, ordena, page);
+		Long count = produtoDao.count(titulo, departamento, categoria, subCategoria, ordena);
+		Long c = count / PAGINATION_SIZE;
+		if (count % PAGINATION_SIZE > 0)
+			c++;
+		Long nPages = Long.valueOf(c);
+		result.use(Results.json()).from(new Object[]{produtos, nPages}, "produtos").serialize();
 	}
 	
 	

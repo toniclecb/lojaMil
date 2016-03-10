@@ -3,6 +3,7 @@
     var finalizadosucesso = "<fmt:message key='finalizadosucesso' />";
     var cadsucesso = "<fmt:message key='cad.sucesso' />";
     var moeda = "<fmt:message key='moeda' />";
+    var refine = "<fmt:message key='refine' />";
 </script>
 <div class="w3-container">
 	<ul class="w3-navbar w3-card-8 w3-light-grey">
