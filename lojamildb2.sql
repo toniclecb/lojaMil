@@ -211,7 +211,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'2016-03-04','rr','Cleiton','rr','toniclecb@gmail.com'),(2,'2016-03-08','aaa','aaa','aaaaaa','a@a.c');
+INSERT INTO `usuario` VALUES (1,'2016-03-04','rr','Cleiton','rr','email@gmail.com'),(2,'2016-03-08','aaa','aaa','aaaaaa','a@a.c');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
